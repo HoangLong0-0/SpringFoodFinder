@@ -39,7 +39,7 @@ public class IngredientEntity {
     )
     private Collection<DishEntity> dishes;
 
-
-
-
+    public IngredientEntity(String name) {
+        this.name = name;
+    }
 }

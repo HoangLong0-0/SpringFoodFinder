@@ -30,7 +30,7 @@ layout:decorate="~{layouts/admin_layout.html}">
                 <td th:text="${p.id}"></td>
                 <td th:text="${p.name}"></td>
                 <td th:text="${p.category != null} ? ${p.category.name} : ''"></td>
-                <td th:text="${${p.recipe != null} ? ${p.recipe.name} : ''}"></td>
+                <td th:text="${p.recipe != null} ? ${p.recipe.name} : ''"></td>
                 <td><img class="one" th:src="${p.image_url}" width="75" height="75">
                 <a th:href="@{'/admin/update/' + ${p.id}}">Update      </a>
                     <a th:href="@{'/admin/delete/' + ${p.id}}">Delete</a>

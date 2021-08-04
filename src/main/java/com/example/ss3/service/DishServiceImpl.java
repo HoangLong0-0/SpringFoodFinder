@@ -59,6 +59,13 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    public void delete(Integer id) {
+        DishEntity dish = findByID(id);
+        if(dish!=null)
+        dishRepo.delete(dish);
+    }
+
+    @Override
     public Page<DishEntity> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.dishRepo.findAll(pageable);

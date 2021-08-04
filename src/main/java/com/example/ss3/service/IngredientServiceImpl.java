@@ -48,6 +48,31 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    public IngredientEntity findByID(Integer id) {
+        return ingredientRepo.findById(id).get();
+    }
+
+    @Override
+    public void add(IngredientEntity ingredientEntity) {
+         ingredientRepo.save(ingredientEntity);
+    }
+
+    @Override
+    public void save(Integer id, String name) {
+        IngredientEntity ingredientEntity = findByID(id);
+        ingredientEntity.setName(name);
+        ingredientRepo.save(ingredientEntity);
+
+    }
+
+    @Override
+    public void delete(Integer id) {
+        IngredientEntity ingredientEntity = findByID(id);
+        if(ingredientEntity!=null)
+        ingredientRepo.delete(ingredientEntity);
+    }
+
+    @Override
     public Page<IngredientEntity> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.ingredientRepo.findAll(pageable);

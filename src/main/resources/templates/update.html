@@ -24,16 +24,16 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleSelectBorder" >Category </label>
-                    <select  class="custom-select form-control-border" id="exampleSelectBorder">
-                        <option th:each="p : ${category}" name="category_id"
+                    <select  th:name="category_id" class="custom-select form-control-border" id="exampleSelectBorder">
+                        <option th:each="p : ${category}"
                                 th:selected="${dish.id == p.id}"
                                 th:value="${p.id}" th:text="${p.name}+${p.id}"></option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleSelectBorder2">Recipe</label>
-                    <select   class="custom-select form-control-border" id="exampleSelectBorder2">
-                        <option th:each="p : ${recipe}" name="recipe_id"
+                    <select th:name="recipe_id"  class="custom-select form-control-border" id="exampleSelectBorder2">
+                        <option th:each="p : ${recipe}"
                                 th:selected="${dish.id == p.id}"
                                 th:value="${p.id}"
                                 th:text="${p.name}+${p.id}"></option>

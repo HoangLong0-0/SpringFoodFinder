@@ -17,6 +17,14 @@ public interface IngredientService  {
 
     Collection<DishEntity> getDishes();
 
+    IngredientEntity findByID(Integer id);
+
+    void add(IngredientEntity ingredientEntity);
+
+    void save(Integer id,String name);
+
+    void delete(Integer id);
+
     Page<IngredientEntity> findPaginated(int pageNo, int pageSize);
 
     Page<IngredientEntity> findByName(String ingredient,int pageNo, int pageSize);

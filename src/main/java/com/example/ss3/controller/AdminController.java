@@ -46,10 +46,8 @@ public class AdminController {
     }
 
 
-    @GetMapping
+    @GetMapping()
     public String index(Model model) {
-        List<DishEntity> productList = dishService.getAllDish();
-        model.addAttribute("productList", productList);
         return findPaginated(1, model);
     }
 
@@ -91,7 +89,7 @@ public class AdminController {
         String ingredient_des = params.get("ingredient_des");
         DishEntity entity = new DishEntity(name,category,recipe,image,method,ingredient_des);
         dishService.addDish(entity);
-        return "index";
+        return "redirect:/admin";
     }
 
     @GetMapping("/update/{id}")
@@ -113,7 +111,13 @@ public class AdminController {
         String method = params.get("method");
         String ingredient_des = params.get("ingredient_des");
         dishService.saveDish(id,name,category,recipe,image,method,ingredient_des);
-        return "index";
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable(value = "id") int id,Model model) {
+        dishService.delete(id);
+        return  "redirect:/admin";
     }
 
 }
