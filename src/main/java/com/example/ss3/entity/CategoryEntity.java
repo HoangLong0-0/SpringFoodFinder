@@ -25,6 +25,9 @@ public class CategoryEntity {
     @Column(name = "name")
     private String name;
 
+    public CategoryEntity(String name) {
+        this.name = name;
+    }
 
     @JsonIgnore
     @OneToMany(mappedBy = "category")

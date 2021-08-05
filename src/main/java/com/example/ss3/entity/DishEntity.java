@@ -47,7 +47,6 @@ public class DishEntity {
     @JoinColumn(name = "recipe_id", insertable = false, updatable = false)
     private RecipeEntity recipe;
 
-    // mappedBy trỏ tới tên biến persons ở trong Address.
     @ManyToMany(mappedBy = "dishes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     // LAZY để tránh việc truy xuất dữ liệu không cần thiết. Lúc nào cần thì mới query
     @EqualsAndHashCode.Exclude

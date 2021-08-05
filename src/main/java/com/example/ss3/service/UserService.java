@@ -1,5 +1,6 @@
 package com.example.ss3.service;
 
+import com.example.ss3.dto.UserDto;
 import com.example.ss3.entity.UserEntity;
 import com.example.ss3.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class UserService implements UserDetailsService {
         authorities.add(new SimpleGrantedAuthority(userEntity.getRole().getName()));
         return new User(username, userEntity.getPassword(), authorities);
     }
+
 
 }
 

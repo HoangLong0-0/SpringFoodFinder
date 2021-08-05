@@ -1,6 +1,9 @@
 package com.example.ss3.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "user")
@@ -17,17 +20,27 @@ public class UserEntity {
     private String password;
 
     @Column(name = "roleid")
-    private int roleid;
+    private Integer roleid;
 
-    @OneToOne
+    @ManyToOne() //EAGER
     @JoinColumn(name = "roleid", insertable = false, updatable = false)
     private RoleEntity role;
 
-    public int getRoleid() {
+
+    public UserEntity(String username, String password, Integer roleid) {
+        this.username = username;
+        this.password = password;
+        this.roleid = roleid;
+    }
+
+    public UserEntity() {
+    }
+
+    public Integer getRoleid() {
         return roleid;
     }
 
-    public void setRoleid(int roleid) {
+    public void setRoleid(Integer roleid) {
         this.roleid = roleid;
     }
 

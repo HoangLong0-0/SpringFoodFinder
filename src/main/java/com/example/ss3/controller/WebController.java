@@ -1,13 +1,11 @@
 package com.example.ss3.controller;
 
+import com.example.ss3.dto.UserDto;
 import com.example.ss3.entity.DishEntity;
 import com.example.ss3.entity.IngredientEntity;
 import com.example.ss3.entity.ProductEntity;
 import com.example.ss3.entity.RecipeEntity;
-import com.example.ss3.service.DishService;
-import com.example.ss3.service.IngredientService;
-import com.example.ss3.service.ProductService;
-import com.example.ss3.service.RecipeService;
+import com.example.ss3.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -32,7 +30,13 @@ public class WebController {
     IngredientService ingredientService;
     @Autowired
     RecipeService recipeService;
+    @Autowired
+    UserCustomService userCustomService;
 
+    @ModelAttribute("UserEntity")
+    UserDto userDto(){
+        return new UserDto();
+    }
 
     //security
     @GetMapping("/login")
@@ -43,9 +47,16 @@ public class WebController {
     public String error404(){
         return "security/404";
     }
+    @GetMapping("/register")
+    public String register() { return "security/register"; }
     @GetMapping("/error")
     public String error() {
         return "security/404";
+    }
+    @PostMapping("/register/save")
+    public  String save(@ModelAttribute("UserEntity") UserDto userDto){
+        userCustomService.save(userDto);
+        return "redirect:/login?success";
     }
 
 

@@ -1,11 +1,9 @@
 package com.example.ss3.controller;
 
 import com.example.ss3.dto.ProductDto;
+import com.example.ss3.dto.UserDto;
 import com.example.ss3.entity.*;
-import com.example.ss3.service.CategoryService;
-import com.example.ss3.service.DishService;
-import com.example.ss3.service.IngredientService;
-import com.example.ss3.service.RecipeService;
+import com.example.ss3.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +19,8 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController {
 
+    @Autowired
+    UserCustomService userCustomService;
     @Autowired
     DishService dishService;
     @Autowired
@@ -29,13 +30,18 @@ public class AdminController {
     @Autowired
     CategoryService categoryService;
 
-
+    @ModelAttribute("UserEntity")
+    UserDto userDto(){
+        return new UserDto();
+    }
 
     //security
     @GetMapping("/login")
     public String login() {
         return "security/login";
     }
+    @GetMapping("/register")
+    public String register() { return "security/register"; }
     @GetMapping(value = "/login",params = "error")
     public String error404(){
         return "security/404";
@@ -43,6 +49,11 @@ public class AdminController {
     @GetMapping("/error")
     public String error() {
         return "security/404";
+    }
+    @PostMapping("/register/save")
+    public  String save(@ModelAttribute("UserEntity")UserDto userDto){
+        userCustomService.save(userDto);
+        return "redirect:/admin/login?success";
     }
 
 
@@ -102,7 +113,7 @@ public class AdminController {
     }
 
     @PostMapping("/update/save")
-    public String save(Model model,@RequestParam Map<String, String> params){
+    public String save(Model model,@RequestParam Map<String, String> params) throws IOException {
         Integer id = Integer.valueOf(params.get("id"));
         String name = params.get("name");
         Integer category = Integer.valueOf(params.get("category_id"));

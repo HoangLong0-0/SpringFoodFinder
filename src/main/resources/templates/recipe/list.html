@@ -29,7 +29,7 @@
                 <td th:text="${p.name}"></td>
                 <td th:text="${p.category.name}">
                 <td th:text="${p.description}" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"></td>
-                <td> <a th:href="@{'/admin/recipe/update' + ${p.id}}">Update      </a></td>
+                <td> <a th:href="@{'/admin/recipe/update/' + ${p.id}}">Update      </a></td>
                 <td> <a th:href="@{'/admin/recipe/delete/' + ${p.id}}">Delete</a></td>
 
 
@@ -43,17 +43,17 @@
                 </div>
                 <div class="col-sm-10">
             <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}" th:href="@{'/admin/category' + ${i}}">[[${i}]]</a>
+      <a th:if="${currentPage != i}" th:href="@{'/admin/recipe/' + ${i}}">[[${i}]]</a>
       <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                 </div>
                 <div class="col-sm-2"></div>
                 <div class="col-sm-1">
-                    <a th:if="${currentPage < totalPages}" th:href="@{'/admin/category' + ${currentPage + 1}}">Next</a>
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/admin/recipe/' + ${currentPage + 1}}">Next</a>
                     <span th:unless="${currentPage < totalPages}">Next</span>
                 </div>
                 <div class="col-sm-1">
-                    <a th:if="${currentPage < totalPages}" th:href="@{'/admin/' + ${totalPages}}">Last</a>
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/admin/recipe/' + ${totalPages}}">Last</a>
                     <span th:unless="${currentPage < totalPages}">Last</span>
                 </div>
             </div>

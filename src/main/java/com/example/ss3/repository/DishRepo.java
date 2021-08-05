@@ -18,4 +18,9 @@ public interface DishRepo extends JpaRepository<DishEntity, Integer> {
 //    public Page<DishEntity> findDishByIngredient(@Param("ingredient") String ingredient, Pageable pageable);
     @Query(value = "SELECT r FROM DishEntity r  WHERE r.ingredient_des LIKE %:ingredient% ")
     public Page<DishEntity> findDishByIngredient(@Param("ingredient") String ingredient, Pageable pageable);
+    @Query("SELECT d FROM DishEntity d left join d.ingredients i WHERE i.name IN (:ingredients)")
+    public Page<DishEntity> findDishByIngredients(@Param("ingredients")List<String> ingredients, Pageable pageable);
+
+
+
 }

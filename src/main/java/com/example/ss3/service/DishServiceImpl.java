@@ -37,6 +37,12 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    public Page<DishEntity> findByIngredients(List<String> ingredients, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.dishRepo.findDishByIngredients(ingredients,pageable);
+    }
+
+    @Override
     public Page<DishEntity> findByRecipe(int pageNo, int pageSize) {
         return null;
     }

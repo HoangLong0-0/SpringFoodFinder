@@ -1,6 +1,7 @@
 package com.example.ss3.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,10 @@ public class RecipeEntity {
     @Column(name = "id")
     private Integer id;
 
+
     @Column(name = "name")
     private String name;
+
 
     @Column(name = "description")
     private String description;
@@ -36,5 +39,9 @@ public class RecipeEntity {
     @OneToMany(mappedBy = "recipe")
     private List<DishEntity> dishes;
 
-
+    public RecipeEntity(String name, String description, Integer category_id) {
+        this.name = name;
+        this.description = description;
+        this.category_id = category_id;
+    }
 }
