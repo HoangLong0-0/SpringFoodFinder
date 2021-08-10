@@ -1,5 +1,6 @@
 package com.example.ss3.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,6 +40,9 @@ public class DishEntity {
     @Column(name = "ingredient_des")
     private String ingredient_des;
 
+    @Column(name = "price",columnDefinition = "integer default 100")
+    private Float price;
+
     @ManyToOne() //EAGER
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private CategoryEntity category;
@@ -46,6 +50,10 @@ public class DishEntity {
     @ManyToOne() //EAGER
     @JoinColumn(name = "recipe_id", insertable = false, updatable = false)
     private RecipeEntity recipe;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "dish")
+    public  Collection<CartEntity> carts;
 
     @ManyToMany(mappedBy = "dishes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     // LAZY để tránh việc truy xuất dữ liệu không cần thiết. Lúc nào cần thì mới query

@@ -26,6 +26,10 @@ public class UserEntity {
     @JoinColumn(name = "roleid", insertable = false, updatable = false)
     private RoleEntity role;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    public  Collection<CartEntity> carts;
+
 
     public UserEntity(String username, String password, Integer roleid) {
         this.username = username;

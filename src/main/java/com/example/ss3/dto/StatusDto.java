@@ -5,24 +5,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DishDto {
+public class StatusDto {
+
     private Integer id;
 
+    @NotNull
     private String name;
 
-    private Integer category_id;
-
-    private Integer recipe_id;
-
-    private String image_url;
-
-    private String method;
-
-    private String ingredient_des;
-
-    private  float price;
+    public StatusDto(@NotNull String name) {
+        this.name = name;
+    }
 }
