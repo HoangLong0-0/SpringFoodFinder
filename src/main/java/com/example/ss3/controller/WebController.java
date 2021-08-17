@@ -69,6 +69,12 @@ public class WebController {
 //        return findPaginated(1, model);
 //    }
 
+    @GetMapping("/test")
+    public String test(Model model) {
+        return "test";
+    }
+
+
         @GetMapping("/")
     public String index(Model model) {
 //        Collection<IngredientEntity> ingredients = ingredientService.getIngredients();

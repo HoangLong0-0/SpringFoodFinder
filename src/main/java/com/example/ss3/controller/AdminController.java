@@ -57,6 +57,7 @@ public class AdminController {
     }
 
 
+
     @GetMapping()
     public String index(Model model) {
         return findPaginated(1, model);

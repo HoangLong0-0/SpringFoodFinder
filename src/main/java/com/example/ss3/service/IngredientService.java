@@ -21,7 +21,7 @@ public interface IngredientService  {
 
     void add(IngredientEntity ingredientEntity);
 
-    void save(Integer id,String name);
+    void save(Integer id,String name, String image);
 
     void delete(Integer id);
 

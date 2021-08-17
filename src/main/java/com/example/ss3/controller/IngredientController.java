@@ -49,7 +49,8 @@ public class IngredientController {
     public String create(@RequestParam Map<String, String> params, Model model, @ModelAttribute("ingredientEntity")
             IngredientEntity ingredientEntity) {
         String name = params.get("name");
-        IngredientEntity entity = new IngredientEntity(name);
+        String image = params.get("image");
+        IngredientEntity entity = new IngredientEntity(name,image);
         ingredientService.add(entity);
         return "redirect:/admin/ingredient";
     }
@@ -65,7 +66,8 @@ public class IngredientController {
     public String save(Model model,@RequestParam Map<String, String> params){
         Integer id = Integer.valueOf(params.get("id"));
         String name = params.get("name");
-        ingredientService.save(id,name);
+        String image = params.get("image");
+        ingredientService.save(id,name,image);
         return "redirect:/admin/ingredient";
     }
 

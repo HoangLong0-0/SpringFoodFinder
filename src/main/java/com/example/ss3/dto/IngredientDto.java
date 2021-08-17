@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class IngredientDto {
     private Integer id;
-
+    private String image;
     private String name;
 }

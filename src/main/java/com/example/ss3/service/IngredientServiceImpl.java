@@ -58,11 +58,11 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void save(Integer id, String name) {
+    public void save(Integer id, String name, String image) {
         IngredientEntity ingredientEntity = findByID(id);
         ingredientEntity.setName(name);
+        ingredientEntity.setImage(image);
         ingredientRepo.save(ingredientEntity);
-
     }
 
     @Override

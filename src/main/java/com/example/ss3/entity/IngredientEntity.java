@@ -14,9 +14,10 @@ public class IngredientEntity {
     public IngredientEntity() {
     }
 
-    public IngredientEntity(Integer id, String name, Collection<DishEntity> dishes) {
+    public IngredientEntity(Integer id, String name, String image, Collection<DishEntity> dishes) {
         this.id = id;
         this.name = name;
+        this.image = image;
         this.dishes = dishes;
     }
 
@@ -27,6 +28,9 @@ public class IngredientEntity {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "image")
+    private String image;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -39,7 +43,8 @@ public class IngredientEntity {
     )
     private Collection<DishEntity> dishes;
 
-    public IngredientEntity(String name) {
+    public IngredientEntity(String name, String image) {
         this.name = name;
+        this.image = image;
     }
 }
