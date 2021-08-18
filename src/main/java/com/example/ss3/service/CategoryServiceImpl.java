@@ -36,15 +36,16 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void add(CategoryDto categoryDto) {
         CategoryEntity categoryEntity = new CategoryEntity(
-                categoryDto.getName()
+                categoryDto.getName(), categoryDto.getImage()
         );
         categoryRepo.save(categoryEntity);
     }
 
     @Override
-    public CategoryEntity save(Integer id, String name) {
+    public CategoryEntity save(Integer id, String name, String image) {
         CategoryEntity categoryEntity = findByID(id);
         categoryEntity.setName(name);
+        categoryEntity.setImage(image);
         return categoryRepo.save(categoryEntity);
     }
     @Override

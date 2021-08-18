@@ -25,8 +25,12 @@ public class CategoryEntity {
     @Column(name = "name")
     private String name;
 
-    public CategoryEntity(String name) {
+    @Column(name = "image")
+    private String image;
+
+    public CategoryEntity(String name, String image) {
         this.name = name;
+        this.image = image;
     }
 
     @JsonIgnore

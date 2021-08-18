@@ -51,7 +51,8 @@ public class CategoryController {
     public String create(@RequestParam Map<String, String> params, Model model, @ModelAttribute("categoryDto")
             CategoryDto categoryDto) {
         String name = params.get("name");
-        CategoryDto dto = new CategoryDto(name);
+        String image = params.get("image");
+        CategoryDto dto = new CategoryDto(name,image);
         categoryService.add(dto);
         return "redirect:/admin/category";
     }
@@ -67,7 +68,8 @@ public class CategoryController {
     public String save(Model model,@RequestParam Map<String, String> params){
         Integer id = Integer.valueOf(params.get("id"));
         String name = params.get("name");
-        categoryService.save(id,name);
+        String image = params.get("image");
+        categoryService.save(id,name,image);
         return "redirect:/admin/category";
     }
 

@@ -13,7 +13,10 @@ public class CategoryDto {
 
     private String name;
 
-    public CategoryDto(String name) {
+    private String image;
+
+    public CategoryDto(String name,String image) {
         this.name = name;
+        this.image = image;
     }
 }

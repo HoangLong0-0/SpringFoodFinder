@@ -12,6 +12,6 @@ public interface CategoryService {
     Page<CategoryEntity> findPaginated(int pageNo, int pageSize);
     CategoryEntity findByID(Integer id);
     void  add(CategoryDto categoryDto);
-    CategoryEntity save(Integer id,String name);
+    CategoryEntity save(Integer id,String name, String image);
     void delete(Integer id);
 }

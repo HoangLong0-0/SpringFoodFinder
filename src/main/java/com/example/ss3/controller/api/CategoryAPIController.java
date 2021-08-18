@@ -17,7 +17,7 @@ public class CategoryAPIController {
     CategoryService categoryService;
     @GetMapping()
     public ResponseEntity getDishPage(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                                      @RequestParam(value = "limit", required = false, defaultValue = "4") Integer limit) {
+                                      @RequestParam(value = "limit", required = false, defaultValue = "5") Integer limit) {
         BaseResponse res = new BaseResponse();
         res.data = categoryService.findPaginated(page,limit).getContent();
         return ResponseEntity.ok(res);
