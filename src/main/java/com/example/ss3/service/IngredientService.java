@@ -25,6 +25,8 @@ public interface IngredientService  {
 
     void delete(Integer id);
 
+    long pageCount();
+
     Page<IngredientEntity> findPaginated(int pageNo, int pageSize);
 
     Page<IngredientEntity> findByName(String ingredient,int pageNo, int pageSize);

@@ -73,6 +73,11 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    public long pageCount() {
+        return ingredientRepo.count();
+    }
+
+    @Override
     public Page<IngredientEntity> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.ingredientRepo.findAll(pageable);

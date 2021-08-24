@@ -16,9 +16,15 @@ public class IngredientAPIController {
     IngredientService ingredientService;
     @GetMapping()
     public ResponseEntity getIngredientPage(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                                      @RequestParam(value = "limit", required = false, defaultValue = "4") Integer limit) {
+                                      @RequestParam(value = "limit", required = false, defaultValue = "0") Integer limit) {
         BaseResponse res = new BaseResponse();
-        res.data = ingredientService.findPaginated(page,limit).getContent();
+        if(limit==0){
+            res.data = ingredientService.getAllIngredient();
+        }
+        else {
+            res.data = ingredientService.findPaginated(page,limit).getContent();
+        }
+
         return ResponseEntity.ok(res);
     }
     @GetMapping("/search")
