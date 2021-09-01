@@ -1,5 +1,6 @@
 package com.example.ss3.service;
 
+import com.example.ss3.entity.CategoryEntity;
 import com.example.ss3.entity.DishEntity;
 import com.example.ss3.repository.DishRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,15 @@ public class DishServiceImpl implements DishService {
     public Page<DishEntity> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.dishRepo.findAll(pageable);
+    }
+
+    @Override
+    public long getTotal() {
+        return dishRepo.count();
+    }
+
+    @Override
+    public long countByCategory(CategoryEntity categoryEntity) {
+        return dishRepo.countByCategory(categoryEntity);
     }
 }

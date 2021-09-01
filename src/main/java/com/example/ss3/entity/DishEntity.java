@@ -53,7 +53,7 @@ public class DishEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "dish")
-    public  Collection<CartEntity> carts;
+    public  Collection<ItemEntity> orders;
 
     @ManyToMany(mappedBy = "dishes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     // LAZY để tránh việc truy xuất dữ liệu không cần thiết. Lúc nào cần thì mới query

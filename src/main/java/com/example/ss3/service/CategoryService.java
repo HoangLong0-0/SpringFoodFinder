@@ -14,4 +14,5 @@ public interface CategoryService {
     void  add(CategoryDto categoryDto);
     CategoryEntity save(Integer id,String name, String image);
     void delete(Integer id);
+    long getTotal();
 }

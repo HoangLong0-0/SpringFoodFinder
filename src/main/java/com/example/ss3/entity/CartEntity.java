@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor
@@ -20,15 +21,6 @@ public class CartEntity {
 
     @Column(name = "user_id")
     private Integer user_id;
-
-    @Column(name = "dish_id")
-    private Integer dish_id;
-
-    @Column(name = "qty")
-    private Integer qty;
-
-    @Column(name = "sum")
-    private Float sum;
 
     @Column(name = "phone")
     private String phone;
@@ -49,21 +41,18 @@ public class CartEntity {
     @JoinColumn(name = "user_id",insertable = false, updatable = false)
     private UserEntity user;
 
-    @JsonIgnore
-    @ManyToOne() //EAGER
-    @JoinColumn(name = "dish_id", insertable = false, updatable = false)
-    private DishEntity dish;
 
     @JsonIgnore
     @ManyToOne() //EAGER
     @JoinColumn(name = "status_id", insertable = false, updatable = false)
     private StatusEntity status;
 
-    public CartEntity(Integer user_id, Integer dish_id, Integer qty, Float sum, String phone, String address, String comment, Integer status_id) {
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "cart")
+    public Collection<ItemEntity> items;
+
+    public CartEntity(Integer user_id, String phone, String address, String comment, Integer status_id) {
         this.user_id = user_id;
-        this.dish_id = dish_id;
-        this.qty = qty;
-        this.sum = sum;
         this.phone = phone;
         this.address = address;
         this.comment = comment;

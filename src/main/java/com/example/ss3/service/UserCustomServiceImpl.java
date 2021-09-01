@@ -21,4 +21,9 @@ public class UserCustomServiceImpl implements UserCustomService {
                 passwordEncoder.encode(userDto.getPassword()) ,2);
         return userRepo.save(userEntity);
     }
+
+    @Override
+    public long getTotal() {
+        return userRepo.count();
+    }
 }

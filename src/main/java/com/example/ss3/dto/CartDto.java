@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor
@@ -17,18 +18,10 @@ public class CartDto {
     private Integer user_id;
 
     @NotNull
-    private Integer dish_id;
-
-
-    @NotNull
-    private Integer qty;
-
-
-    private Float sum;
-
-    @NotNull
     private String phone;
 
+
+    public Collection<ItemDto> items;
 
     @NotNull
     private String address;
@@ -41,10 +34,16 @@ public class CartDto {
 
     public CartDto(@NotNull Integer user_id, @NotNull Integer dish_id, @NotNull Integer qty, Float sum, @NotNull String phone, @NotNull String address, String comment, Integer status_id) {
         this.user_id = user_id;
-        this.dish_id = dish_id;
-        this.qty = qty;
-        this.sum = sum;
         this.phone = phone;
+        this.address = address;
+        this.comment = comment;
+        this.status_id = status_id;
+    }
+
+    public CartDto(@NotNull Integer user_id, @NotNull String phone, Collection<ItemDto> items, @NotNull String address, String comment, Integer status_id) {
+        this.user_id = user_id;
+        this.phone = phone;
+        this.items = items;
         this.address = address;
         this.comment = comment;
         this.status_id = status_id;

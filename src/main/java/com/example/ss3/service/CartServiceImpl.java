@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,8 +44,7 @@ public class CartServiceImpl implements CartService{
     @Override
     public String add(CartDto cartDto) {
         CartEntity cartEntity = new CartEntity(
-                cartDto.getUser_id(),cartDto.getDish_id(),cartDto.getQty(),cartDto.getSum(),
-                cartDto.getPhone(),cartDto.getAddress(),cartDto.getComment(),cartDto.getStatus_id()
+                cartDto.getUser_id(), cartDto.getPhone(),cartDto.getAddress(),cartDto.getComment(),cartDto.getStatus_id()
         );
         cartRepo.save(cartEntity);
         return "Add successfully";
@@ -57,8 +57,25 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
+    public List<CartEntity> findAllByUser(Integer id) {
+        return cartRepo.findALlCartByUser(id);
+    }
+
+    @Override
     public Page<CartEntity> findByStatus(Integer id, int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return cartRepo.findByStatus_id(id,pageable);
+    }
+
+    @Override
+    public long getTotal() {
+        return cartRepo.count();
+    }
+
+    @Override
+    public Integer getCartId() {
+        Pageable pageable = PageRequest.of(0,1, Sort.Direction.DESC,"id");
+        Integer id = cartRepo.findAll(pageable).toList().get(0).getId();
+        return id;
     }
 }

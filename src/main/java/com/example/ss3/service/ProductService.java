@@ -13,4 +13,5 @@ public interface ProductService {
     void deleteProduct(Integer productid);
     void updateProduct(Integer id, String name, Integer price, Integer quantity, Integer category);
     Page<ProductEntity> findPaginated(int pageNo, int pageSize);
+    long getTotal();
 }

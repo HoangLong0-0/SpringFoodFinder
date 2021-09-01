@@ -68,4 +68,9 @@ public class RecipeServiceImpl implements RecipeService {
             recipeRepo.delete(recipeEntity);
 
     }
+
+    @Override
+    public long getTotal() {
+       return recipeRepo.count();
+    }
 }

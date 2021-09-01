@@ -1,5 +1,6 @@
 package com.example.ss3.repository;
 
+import com.example.ss3.entity.CategoryEntity;
 import com.example.ss3.entity.DishEntity;
 import com.example.ss3.entity.ProductEntity;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ public interface DishRepo extends JpaRepository<DishEntity, Integer> {
     @Query("SELECT d FROM DishEntity d left join d.ingredients i WHERE i.name IN (:ingredients)")
     public Page<DishEntity> findDishByIngredients(@Param("ingredients")List<String> ingredients, Pageable pageable);
 
+    public  long countByCategory(CategoryEntity categoryEntity);
 
 
 }

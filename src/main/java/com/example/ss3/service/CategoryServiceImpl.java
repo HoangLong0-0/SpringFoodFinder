@@ -55,4 +55,9 @@ public class CategoryServiceImpl implements CategoryService {
             categoryRepo.delete(cate);
 
     }
+
+    @Override
+    public long getTotal() {
+        return categoryRepo.count();
+    }
 }

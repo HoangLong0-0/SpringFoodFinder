@@ -68,6 +68,11 @@ public class ProductServiceImpl implements ProductService {
         List<ProductEntity> productEntityList;
         return this.productRepo.findAll(pageable);
     }
+
+    @Override
+    public long getTotal() {
+        return productRepo.count();
+    }
 //    int pageNumber = 1;
 //    Pageable pageable = PageRequest.of(pageNumber, pageSize);
 //    Page<ProductEntity> page = productRepo.findAll(pageable);

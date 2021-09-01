@@ -6,4 +6,5 @@ import com.example.ss3.entity.UserEntity;
 
 public interface UserCustomService {
     UserEntity save(UserDto userDto);
+    long getTotal();
 }

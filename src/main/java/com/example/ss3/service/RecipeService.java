@@ -20,4 +20,5 @@ public interface RecipeService {
     RecipeEntity save(Integer id,RecipeDto recipeDto);
 
     void delete(Integer id);
+    long getTotal();
 }
