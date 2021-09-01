@@ -18,7 +18,7 @@ public class UserCustomServiceImpl implements UserCustomService {
     public UserEntity save(UserDto userDto) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserEntity userEntity = new UserEntity(userDto.getUsername(),
-                passwordEncoder.encode(userDto.getPassword()) ,2);
+                passwordEncoder.encode(userDto.getPassword()) , userDto.getEmail(), 2);
         return userRepo.save(userEntity);
     }
 

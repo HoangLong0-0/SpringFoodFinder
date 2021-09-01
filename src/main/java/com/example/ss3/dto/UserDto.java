@@ -12,5 +12,13 @@ public class UserDto {
     private int id;
     private String username;
     private String password;
+    private String email;
     private Integer roleid;
+
+    public UserDto(String username, String password, String email, Integer roleid) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roleid = roleid;
+    }
 }

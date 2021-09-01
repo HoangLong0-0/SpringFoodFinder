@@ -19,6 +19,9 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "roleid")
     private Integer roleid;
 
@@ -31,9 +34,10 @@ public class UserEntity {
     public  Collection<CartEntity> carts;
 
 
-    public UserEntity(String username, String password, Integer roleid) {
+    public UserEntity(String username, String password, String email, Integer roleid) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.roleid = roleid;
     }
 
@@ -78,5 +82,13 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
