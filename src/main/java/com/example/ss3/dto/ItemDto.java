@@ -30,4 +30,8 @@ public class ItemDto {
         this.quantity = quantity;
         this.product_id = product_id;
     }
+
+    public ItemDto(Integer product_id) {
+        this.product_id = product_id;
+    }
 }

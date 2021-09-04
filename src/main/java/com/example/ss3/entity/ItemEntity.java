@@ -33,7 +33,7 @@ public class ItemEntity {
     @JoinColumn(name = "cart_id",insertable = false, updatable = false)
     private CartEntity cart;
 
-    @JsonIgnore
+//    @JsonIgnore - get
     @ManyToOne() //EAGER
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private DishEntity dish;

@@ -2,6 +2,7 @@ package com.example.ss3.service;
 
 import com.example.ss3.dto.CartDto;
 import com.example.ss3.entity.CartEntity;
+import com.example.ss3.entity.ItemEntity;
 import com.example.ss3.repository.CartRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -111,5 +112,17 @@ public class CartServiceImpl implements CartService{
         cartEntity.setPhone(cartDto.getPhone());
         add(new CartDto(customService.getUserId()));
         return  cartRepo.save(cartEntity);
+    }
+
+    @Override
+    public Integer checkTempCartByDishId(Integer id) {
+        CartEntity cartEntity = getTempCart();
+        for (ItemEntity i : cartEntity.getItems()
+             ) {
+            if(i.getProduct_id() == id){
+                return i.getId();
+            }
+        }
+        return null;
     }
 }

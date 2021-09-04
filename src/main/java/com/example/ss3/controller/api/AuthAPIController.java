@@ -1,7 +1,10 @@
 package com.example.ss3.controller.api;
 
+import com.example.ss3.entity.UserEntity;
 import com.example.ss3.model.AuthenticationRequest;
 import com.example.ss3.model.AuthenticationResponse;
+import com.example.ss3.service.CustomService;
+import com.example.ss3.service.UserCustomService;
 import com.example.ss3.service.UserService;
 import com.example.ss3.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,10 @@ public class AuthAPIController {
     @Autowired
     private UserService userService;
     @Autowired
+    private UserCustomService userCustomService;
+    @Autowired
+    private CustomService customService;
+    @Autowired
     private JwtUtil jwtUtil;
     @PostMapping
     public ResponseEntity<?> createAuthenticationToken(
@@ -37,6 +44,7 @@ public class AuthAPIController {
         }
         final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
         final  String jwt = jwtUtil.generateToken(userDetails);
-        return  ResponseEntity.ok(new AuthenticationResponse(jwt));
+        UserEntity userEntity = userCustomService.getUserByName(userDetails.getUsername());
+        return  ResponseEntity.ok(new AuthenticationResponse(jwt,userEntity.getUsername(),userEntity.getEmail()));
     }
 }

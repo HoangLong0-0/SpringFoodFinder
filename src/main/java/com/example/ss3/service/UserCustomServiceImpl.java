@@ -35,4 +35,14 @@ public class UserCustomServiceImpl implements UserCustomService {
         UserEntity userEntity = userRepo.findByUsername(username);
         return userEntity.getId();
     }
+
+    @Override
+    public UserEntity getUserById(Integer id) {
+        return userRepo.findById(id).get();
+    }
+
+    @Override
+    public UserEntity getUserByName(String name) {
+        return userRepo.findByUsername(name);
+    }
 }

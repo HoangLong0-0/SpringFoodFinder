@@ -1,8 +1,10 @@
 package com.example.ss3.service;
 
 import com.example.ss3.dto.ItemDto;
+import com.example.ss3.entity.DishEntity;
 import com.example.ss3.entity.ItemEntity;
 import com.example.ss3.repository.CartRepo;
+import com.example.ss3.repository.DishRepo;
 import com.example.ss3.repository.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Service
@@ -22,6 +25,8 @@ public class ItemServiceImpl implements ItemService {
     ItemRepo itemRepo;
     @Autowired
     CartRepo cartRepo;
+    @Autowired
+    DishRepo dishRepo;
     @Autowired
     UserCustomService userCustomService;
     @Autowired
@@ -80,9 +85,17 @@ public class ItemServiceImpl implements ItemService {
     public ItemEntity addToCart(ItemDto itemDto) {
         Integer userId = customService.getUserId();
         Integer cartId = cartService.getCartIdByUserId(userId);
-        ItemEntity itemEntity = new ItemEntity(itemDto.getQuantity(),
-                itemDto.getProduct_id(), cartId);
-        return  itemRepo.save(itemEntity);
+        Integer itemId = cartService.checkTempCartByDishId(itemDto.getProduct_id());
+        if(itemId != null){
+            ItemEntity itemEntity = findByID(itemId);
+                    itemEntity.setQuantity(itemEntity.getQuantity() + 1);
+            return  itemEntity;
+        }
+        else {
+            ItemEntity itemEntity = new ItemEntity(1,
+                    itemDto.getProduct_id(), cartId);
+            return  itemRepo.save(itemEntity);
+        }
     }
 
     @Override

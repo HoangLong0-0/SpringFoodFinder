@@ -22,4 +22,6 @@ public interface CartService {
     Integer getCartIdByUserId(Integer userId);
     CartEntity getTempCart();
     CartEntity addCartUser(CartDto cartDto);
+    Integer checkTempCartByDishId(Integer id);
+
 }
