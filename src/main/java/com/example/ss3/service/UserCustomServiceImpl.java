@@ -4,6 +4,9 @@ import com.example.ss3.dto.UserDto;
 import com.example.ss3.entity.UserEntity;
 import com.example.ss3.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,5 +28,11 @@ public class UserCustomServiceImpl implements UserCustomService {
     @Override
     public long getTotal() {
         return userRepo.count();
+    }
+
+    @Override
+    public Integer getUserIdByUsername(String username) {
+        UserEntity userEntity = userRepo.findByUsername(username);
+        return userEntity.getId();
     }
 }

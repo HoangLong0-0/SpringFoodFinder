@@ -3,7 +3,9 @@ package com.example.ss3.controller.api;
 import com.example.ss3.dto.CartDto;
 import com.example.ss3.dto.ItemDto;
 import com.example.ss3.dto.UserDto;
+import com.example.ss3.entity.UserEntity;
 import com.example.ss3.model.BaseResponse;
+import com.example.ss3.service.CartService;
 import com.example.ss3.service.UserCustomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,15 @@ import java.util.Collection;
 public class RegisterAPIController {
     @Autowired
     private UserCustomService userCustomService;
+    @Autowired
+    private CartService cartService;
 
     @PostMapping
     public ResponseEntity create(@RequestBody UserDto userDto){
         BaseResponse res = new BaseResponse();
-        res.data = userCustomService.save(userDto);
+        UserEntity userEntity = userCustomService.save(userDto);
+        res.data = userEntity;
+        cartService.add(new CartDto(userEntity.getId()));
         return  ResponseEntity.ok(res);
     }
 }

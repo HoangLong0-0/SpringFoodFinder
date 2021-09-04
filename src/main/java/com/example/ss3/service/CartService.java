@@ -14,9 +14,12 @@ public interface CartService {
     CartEntity findByID(Integer id);
     void updateStatus(int cart_id,int status_id,String comment);
     String  add(CartDto cartDto);
-    Page<CartEntity> findByUser(Integer id, int pageNo, int pageSize);
-    List<CartEntity> findAllByUser(Integer id);
+    List<CartEntity> findByUser(int pageNo, int pageSize);
+    List<CartEntity> findAllByUser();
     Page<CartEntity> findByStatus(Integer id, int pageNo, int pageSize);
     long getTotal();
     Integer getCartId();
+    Integer getCartIdByUserId(Integer userId);
+    CartEntity getTempCart();
+    CartEntity addCartUser(CartDto cartDto);
 }

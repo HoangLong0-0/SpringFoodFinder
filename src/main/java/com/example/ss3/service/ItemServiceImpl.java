@@ -2,11 +2,14 @@ package com.example.ss3.service;
 
 import com.example.ss3.dto.ItemDto;
 import com.example.ss3.entity.ItemEntity;
+import com.example.ss3.repository.CartRepo;
 import com.example.ss3.repository.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +17,15 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService {
     @Autowired
+    CustomService customService;
+    @Autowired
     ItemRepo itemRepo;
+    @Autowired
+    CartRepo cartRepo;
+    @Autowired
+    UserCustomService userCustomService;
+    @Autowired
+    CartService cartService;
 
     @Override
     public List<ItemEntity> getAll() {
@@ -52,5 +63,32 @@ public class ItemServiceImpl implements ItemService {
         if(itemEntity !=null)
             itemRepo.delete(itemEntity);
 
+    }
+
+    @Override
+    public String removeFromCart(Integer id) {
+        Integer userId = customService.getUserId();
+        ItemEntity itemEntity = findByID(id);
+        if(itemEntity.getCart().getUser_id()!=userId){
+            return "remove failed. no permission";
+        }
+        itemRepo.delete(itemEntity);
+        return "remove successful";
+    }
+
+    @Override
+    public ItemEntity addToCart(ItemDto itemDto) {
+        Integer userId = customService.getUserId();
+        Integer cartId = cartService.getCartIdByUserId(userId);
+        ItemEntity itemEntity = new ItemEntity(itemDto.getQuantity(),
+                itemDto.getProduct_id(), cartId);
+        return  itemRepo.save(itemEntity);
+    }
+
+    @Override
+    public ItemEntity updateItemFromCart(ItemDto itemDto) {
+        ItemEntity itemEntity = itemRepo.findById(itemDto.getId()).get();
+        itemEntity.setQuantity(itemDto.getQuantity());
+        return itemRepo.save(itemEntity);
     }
 }

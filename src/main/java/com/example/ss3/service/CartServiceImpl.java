@@ -10,12 +10,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService{
     @Autowired
     CartRepo cartRepo;
+    @Autowired
+    CustomService customService;
 
     @Override
     public List<CartEntity> getAll() {
@@ -51,14 +57,21 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public Page<CartEntity> findByUser(Integer id, int pageNo, int pageSize) {
+    public List<CartEntity> findByUser(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return cartRepo.findCartByUser(id,pageable);
+        List<CartEntity> list = cartRepo.findCartByUser(customService.getUserId(),pageable).getContent();
+        list.remove(list.size()-1);
+        return list;
     }
 
     @Override
-    public List<CartEntity> findAllByUser(Integer id) {
-        return cartRepo.findALlCartByUser(id);
+    public List<CartEntity> findAllByUser() {
+        List<CartEntity> cartEntityList = cartRepo.findALlCartByUser(customService.getUserId());
+        cartEntityList.remove(cartEntityList.size()-1);
+//        Collections.sort(cartEntityList,Collections.reverseOrder());
+//        cartEntityList.stream().skip(1).collect(Collectors.toList());
+//        Collections.sort(cartEntityList,Collections.reverseOrder());
+        return  cartEntityList ;
     }
 
     @Override
@@ -77,5 +90,26 @@ public class CartServiceImpl implements CartService{
         Pageable pageable = PageRequest.of(0,1, Sort.Direction.DESC,"id");
         Integer id = cartRepo.findAll(pageable).toList().get(0).getId();
         return id;
+    }
+
+    @Override
+    public Integer getCartIdByUserId(Integer userId) {
+        List<CartEntity> cartEntityList = cartRepo.findALlCartByUser(userId);
+        CartEntity cart = cartEntityList.get(cartEntityList.size() -1);
+        return cart.getId();
+    }
+
+    @Override
+    public CartEntity getTempCart() {
+        return cartRepo.findById(getCartIdByUserId(customService.getUserId())).get();
+    }
+
+    @Override
+    public CartEntity addCartUser(CartDto cartDto) {
+        CartEntity cartEntity = getTempCart();
+        cartEntity.setAddress(cartDto.getAddress());
+        cartEntity.setPhone(cartDto.getPhone());
+        add(new CartDto(customService.getUserId()));
+        return  cartRepo.save(cartEntity);
     }
 }

@@ -13,4 +13,7 @@ public interface ItemService {
     void  add(ItemDto itemDto);
     ItemEntity save(ItemDto itemDto);
     void delete(Integer id);
+    String removeFromCart(Integer id);
+    ItemEntity addToCart(ItemDto itemDto);
+    ItemEntity updateItemFromCart(ItemDto itemDto);
 }

@@ -18,50 +18,56 @@ public class CartAPIController {
     CartService cartService;
     @Autowired
     ItemService itemService;
-    @GetMapping()
-    public ResponseEntity getCartPage(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                                      @RequestParam(value = "limit", required = false, defaultValue = "0") Integer limit) {
+//    @GetMapping()
+//    public ResponseEntity getCartPage(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+//                                      @RequestParam(value = "limit", required = false, defaultValue = "0") Integer limit) {
+//        BaseResponse res = new BaseResponse();
+//        if(limit==0){
+//            res.data = cartService.getAll();
+//        }
+//        else {
+//            res.data = cartService.findPaginated(page,limit).getContent();
+//        }
+//        return ResponseEntity.ok(res);
+//    }
+@GetMapping()
+public ResponseEntity getCartByUserPage(
+        @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @RequestParam(value = "limit", required = false, defaultValue = "0") Integer limit) {
+    BaseResponse res = new BaseResponse();
+    if(limit==0){
+        res.data = cartService.findAllByUser();
+    }
+    else {
+        res.data = cartService.findByUser(page,limit);
+    }
+    return ResponseEntity.ok(res);
+}
+    @GetMapping("/temp")
+    public  ResponseEntity getTempCart(){
         BaseResponse res = new BaseResponse();
-        if(limit==0){
-            res.data = cartService.getAll();
-        }
-        else {
-            res.data = cartService.findPaginated(page,limit).getContent();
-        }
+        res.data = cartService.getTempCart();
         return ResponseEntity.ok(res);
     }
+
 
     @PostMapping
     public ResponseEntity create(@RequestBody CartDto cartDto){
         BaseResponse res = new BaseResponse();
-        res.data = cartService.add(cartDto);
-        Integer cartId = cartService.getCartId();
-        Collection<ItemDto> itemDtos = cartDto.getItems();
-        if(!itemDtos.isEmpty()){
-            for (ItemDto itemDto : itemDtos
-                 ) {
-                itemDto.setCart_id(cartId);
-                itemService.add(itemDto);
-            }
-        }
+        res.data = cartService.addCartUser(cartDto);
+//        Integer cartId = cartService.getCartId();
+//        Collection<ItemDto> itemDtos = cartDto.getItems();
+//        if(!itemDtos.isEmpty()){
+//            for (ItemDto itemDto : itemDtos
+//                 ) {
+//                itemDto.setCart_id(cartId);
+//                itemService.add(itemDto);
+//            }
+//        }
         return  ResponseEntity.ok(res);
     }
 
-    @GetMapping("/user")
-    public ResponseEntity getCartByUserPage(
-            @RequestParam(value = "id", required = false, defaultValue = "6") Integer id,
-            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-            @RequestParam(value = "limit", required = false, defaultValue = "0") Integer limit) {
-        BaseResponse res = new BaseResponse();
-        if(limit==0){
-           res.data = cartService.findAllByUser(id);
-        }
-        else {
-            res.data = cartService.findByUser(id,page,limit).getContent();
-        }
 
-        return ResponseEntity.ok(res);
-    }
 
     @GetMapping("/status")
     public ResponseEntity getCartByStatusPage(
